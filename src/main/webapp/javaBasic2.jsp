@@ -67,11 +67,21 @@ table th, table td {
       <td>xxx</td>
     </tr>
   </table>
-
+  
   <h2>平均点</h2>
-  <p>国語：xxx</p>
-  <p>数学：xxx</p>
-  <p>英語：xxx</p>
-  <p>合計：xxx</p>
+ 
+  <% double avgJ = (double) ( aScore[0] + bScore[0] ) / 2;
+                out.println("<p> 国語：" + avgJ + "</p>"); %>
+  
+  <% double avgM = (double) ( aScore[1] + bScore[1] ) / 2;
+              out.println("<p> 数学："+ avgM + "</p>"); %>
+              
+  <% double avgE = (double) ( aScore[2] + bScore[2] ) / 2;
+              out.println("<p> 英語："+ avgE + "</p>"); %>
+              
+  <% double total = (double) avgJ + avgM + avgE;
+              out.println("<p> 合計："+ total + "</p>"); %>
+              
+ 
 </body>
 </html>
