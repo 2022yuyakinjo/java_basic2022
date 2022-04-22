@@ -56,15 +56,15 @@ table th, table td {
     </tr>
     <tr>
       <td>Aさん</td>
-      <td>xxx</td>
-      <td>xxx</td>
-      <td>xxx</td>
+      <td><%out.println(aScore[0]); %></td>
+      <td><%out.println(aScore[1]); %></td>
+      <td><%out.println(aScore[2]); %></td>
     </tr>
     <tr>
       <td>Bさん</td>
-      <td>xxx</td>
-      <td>xxx</td>
-      <td>xxx</td>
+      <td><%out.println(bScore[0]); %></td>
+      <td><%out.println(bScore[1]); %></td>
+      <td><%out.println(bScore[2]); %></td>
     </tr>
   </table>
   
@@ -80,8 +80,8 @@ table th, table td {
               out.println("<p> 英語："+ avgE + "</p>"); %>
               
   <% double total = (double) avgJ + avgM + avgE;
-              out.println("<p> 合計："+ total + "</p>"); %>
+              out.println(" 合計："+ total + ""); %>
               
- 
+
 </body>
 </html>
