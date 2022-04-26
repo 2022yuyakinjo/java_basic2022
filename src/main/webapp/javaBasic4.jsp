@@ -61,13 +61,15 @@
           ・この処理を参考に、振る回数分繰り返すように、処理を実装してください。
 
           ＜勝った回数の保存＞
-          ・実施回数については、セッション使って実施回数を更新する処理を実装済です。
+          ・実施回数については、セッションを使って実施回数を更新する処理を実装済です。
           ・この処理を参考に、勝った回数を更新する処理を実装してください。
         */
 
         // 1～6の数をランダムで生成
-        int val = (int) (Math.random() * 6 + 1);
-
+        
+        for (int var = 0; var <= num; var++) {
+        	int val = (int) (Math.random() * 6 + 1);
+        
         // 合計に加算
         sum += val;
 
@@ -77,8 +79,10 @@
         } else {
             result += ", " + val;
         }
+        }
 
         // セッションから実施回数を取得
+        winNum   = (int) session.getAttribute("winNum");  //取得
         totalNum = (int) session.getAttribute("totalNum");
 
         // 実施回数を1加算
@@ -86,15 +90,16 @@
 
         if (sum % 2 == 0) {
             // 合計が偶数の場合、勝敗用の文字列をセット
-            message = "あなたの勝ちです";
+            message = "あなたの勝ちです";  winNum += 1;  //勝ち
         } else {
             // 合計が奇数の場合、勝敗用の文字列をセット
             message = "あなたの負けです";
         }
 
         // セッションに実施回数を保存
-        session.setAttribute("totalNum", totalNum);
-
+        session.setAttribute("winNum", winNum);   //  取得して表示
+        session.setAttribute("totalNum", totalNum);  // ("name", 値)
+        
     }
 %>
 

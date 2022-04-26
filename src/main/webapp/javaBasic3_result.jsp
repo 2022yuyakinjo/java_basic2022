@@ -1,57 +1,110 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
   pageEncoding="UTF-8"%>
 <%
-    // ※必要な処理を実装してください
-	String name = request.getParameter("name");
+    /*
+       下記コメントを参考に、必要な処理を記述してください
+       現在は各変数に仮で値をセットしているので、
+       商品が選択されている場合の処理に警告(デッドコード)が出ています
+       入力値を受け取るように修正すれば、この警告は消えます
+    */
 
-    // 入力値取得
-    String age = request.getParameter("age");
-    int age20 = Integer.parseInt(age);
-    // ロボットからの返信用メッセージ作成
-    String bloodType = request.getParameter("bloodType");
-	String typeA = request.getParameter("typeA");
-	String typeB = request.getParameter("typeB");
-	String typeAB = request.getParameter("typeAB");
+    // 入力値を取得
+    String[] product = request.getParameterValues("product");
+	//配列(https://blog.java-reference.com/servlet-getparametervalues/)
+    
+    // セッションから現在の所持金を取得
+    int money = 150000;
+    money   = (int) session.getAttribute("money"); 
+    //現在は仮で値をセットしている。実際はセッションから取得する
+
+    // 表示用変数定義
+    String msg = ""; // 購入メッセージ
+    String result = ""; // 購入した商品
+    int sumAmount = 0; // 購入した金額の合計
+    int newMoney = money; // 購入後の所持金
+
+    // 商品が選択されているか判断
+    if (product == null || product.length == 0) {
+    	msg = "商品が選ばれていません";
+    } else {
+        // 購入金額等の計算を行う
+        // 商品は複数選択されるので
+        // 受け取った入力値(product)に複数選択した値が入っている
+        // 拡張for文を使用して、変数productから
+        // 選択したものを取り出し、
+
+		for (String n : product) {  
+			// for (int n : array)
+			//for (変数宣言 : 配列)        {繰り返す処理}
+	        switch(n) {
+	        case "tv" :
+	        	sumAmount += 20000;
+	        	result += "テレビ<br>"; 
+	        	
+	        	break;
+	        case "refrigerator":
+	        	sumAmount += 30000;
+	        	result += "冷蔵庫<br>"; 
+	        	
+	        	break;
+	        case "microWave" :
+	        	sumAmount += 10000;
+	        	result += "電子レンジ<br>";
+	        	
+	        	break;
+	        case "washingMachine":
+	        	sumAmount += 50000;
+	        	result += "洗濯機<br>";
+	        	//nameを指定して値を取得する
+	    	    break;
+	        }
+
+        }
+        
+        // 対応する商品の金額をsumAmountに加算
+        // また、選択した商品名をresultにくっつけて、文字列を作成
+        // (商品名の区切り(後ろ)には<br>をつける)
+        // (例:「テレビ」と「冷蔵庫」を選択した場合、sumAmountの値は「50000」
+        //      resultの値は「テレビ<br>冷蔵庫<br>」になる
+
+        // 現在の所持金と購入金額の合計を比較して、
+        // 所持金が足りているか判断
+           if (newMoney >= sumAmount) { 
+        	   newMoney = money - sumAmount;
+        	   
+        	   msg = "以下の商品を購入しました";
+           } 
+           else {
+        	    msg = "所持金が足りませんでした";
+           }
+           //if (newMoney )
+        // 足りている場合は、購入後の所持金を計算し、
+        // 変数:newMoneyにセット
+			
+        // 購入後の所持金をセッションに保存}
+    }
+    session.setAttribute("money", newMoney);
 %>
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Java基礎_演習問題3</title>
+<title>Java基礎_演習問題4(発展)</title>
 </head>
 <body>
-  <h1>Java基礎 - 演習問題3</h1>
+  <h1>Java基礎 - 演習問題4(発展)</h1>
 
-  <h2>ロボットからの返信</h2>
-  <div>
-    <!-- 必要に応じて処理を変更してください  -->
-    <p>こんにちは、<%= name %>さん！</p>
-    <% if (age20 == 20) {
-          out.println("私と同い年なんですね！");
-         }
-       else if (age20 > 20) {
-          out.println(" 私よりも" + (age20-20) + "歳年上ですね。");
-          }
-       else if(age20 < 20) {
-          out.println("私よりも" + (20-age20) + "歳年下ですね。");
-       }%>
-    <% switch (bloodType) {
-    case "typeA":
-        out.println("私もA型です！");
-        break;
-    case "typeB":
-        out.println("B型の人と話すのは初めてです。");
-        break;
-    case "typeAB":
-        out.println("私の母がAB型です");
-        break;
-    default:
-        out.println("私の父がO型です");
-        break;
-    }
- %>
-  </div>
-  <a href="javaBasic3_input.jsp">戻る</a>
+  <h2>購入結果</h2>
+  <h3><%=msg%></h3>
+  <p>
+    購入前の所持金：<%=money%><br> 購入後の所持金：<%=newMoney%>
+        	   </p>
+  <p>
+    【購入商品】<br>
+    <%=result%>
+  </p>
+
+  <a href="javaBasicDev4_input.jsp">戻る</a>
 </body>
 </html>

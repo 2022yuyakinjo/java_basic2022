@@ -6,11 +6,17 @@
     */
 
     // セッション初期化
+    String btn = request.getParameter("btn");
+    if (session.getAttribute("money") == null || btn != null && btn.equals("reset")) {
+         session.setAttribute("money", 150000);
+    }
     // (セッションに所持金がない、もしくは、リセットボタンを押した際は
     //  所持金の初期値をセッションに保存する)
+    	
 
     // 所持金をセッションから取得
-    int money = 150000; //現在は仮で値をセットしている。実際はセッションから取得する
+    int money = (int) session.getAttribute("money");
+    //キャスト演算
 %>
 <!DOCTYPE html>
 <html>
