@@ -9,14 +9,30 @@
     String widthStr = request.getParameter("width");
     String heightStr = request.getParameter("height");
     String btn = request.getParameter("btn");
-
+    
     double result = 0;
+    
+    if (Utility.isNullOrEmpty(widthStr)) {
+    	widthStr = "0";
+    };
+    
+    if (Utility.isNullOrEmpty(heightStr)) {
+    	heightStr = "0";
+    };
 
+    
+    
     // todo:要実装
     // Utilityクラス内のメソッドを呼んで結果を取得
     // 三角形、長方形のどちらのボタンを押したかを判断し、
+    if (btn.equals("triangle")) {
+    	result = Utility.getTriangleArea(widthStr,  heightStr);
+    } else {
+    	result = Utility.getRectangleArea(widthStr, heightStr);
+    }
     // 押したボタンに対応するメソッドを呼ぶ
-
+    
+	
 %>
 
 <!DOCTYPE html>
@@ -34,4 +50,4 @@
   </p>
   <a href="javaBasic5_input.jsp">戻る</a>
 </body>
-</html>
+</html>s
